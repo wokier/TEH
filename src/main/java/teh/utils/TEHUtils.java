@@ -2,6 +2,7 @@ package teh.utils;
 
 import java.lang.reflect.Field;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import teh.annotations.TEH;
@@ -100,23 +101,23 @@ public class TEHUtils {
         if (!clazz.isAnnotationPresent(TEH.class)) {
             return object.hashCode();
         }
-        int hashCode = 0;
+        HashCodeBuilder builder= new HashCodeBuilder();
         do {
             for (Field declaredField : clazz.getDeclaredFields()) {
                 if (declaredField.isAnnotationPresent(ToStringEqualsHashCode.class)) {
-                    hashCode += getHashCodeValue(object, declaredField);
+                    builder = getHashCodeValue(object, declaredField,builder);
                 }
             }
             clazz= clazz.getSuperclass();
         }while(clazz != null);
-        return hashCode;
+        return builder.toHashCode();
     }
     
-    private static int getHashCodeValue(Object object, Field declaredField) {
+    private static HashCodeBuilder getHashCodeValue(Object object, Field declaredField, HashCodeBuilder builder) {
         try {
-            return hashCode(declaredField.get(object));
+            return builder.append(hashCode(declaredField.get(object)));
         } catch (Exception e) {
-            return 0;
+            return builder;
         }
     }
 

@@ -21,15 +21,12 @@ public class TEHUtilsTest {
     private class Pojo {
 
         public Pojo(int a, String b, Pojo c) {
-            super();
-            this.a = a;
-            this.b = b;
+            this(a,b);
             this.c = c;
         }
 
         public Pojo(int a, String b) {
-            super();
-            this.a = a;
+            this(a);
             this.b = b;
         }
 
@@ -46,13 +43,22 @@ public class TEHUtilsTest {
 
         @ToString
         Pojo c;
+        
     }
     
     @TEH
     private class SubPojo extends Pojo{
+    	public SubPojo(int a, int d) {
+            super(a);
+            this.d = d;
+        }
+
         public SubPojo(int a, String b) {
             super(a,b);
         }
+        
+        @ToStringEqualsHashCode
+        int d;
     }
 
     @Test
@@ -89,5 +95,10 @@ public class TEHUtilsTest {
     public void testHashCodeObjectNull() {
         assertEquals(0,TEHUtils.hashCode(null));
     }
-
+    
+    @Test
+    public void testHashCodePonderateFields() {
+        assertTrue(TEHUtils.hashCode(new SubPojo(1,2))!=TEHUtils.hashCode(new SubPojo(2,1)));
+    }
+    
 }
