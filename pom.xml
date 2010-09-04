@@ -20,6 +20,14 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+				<reportOutputDirectory>javadoc/${project.version}</reportOutputDirectory>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
