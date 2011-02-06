@@ -1,1 +1,5 @@
-TEH stands for ToStringEqualsHashCode
+<h3>TEH</h3>
+TEH stands for <b>T</b>oString <b>E</b>quals <b>H</b>ashCode
+TEH uses annotations to implements toString, equals and hashCode, and forces these 2 rules :
+ - any attribute used for hashCode will be used for equals and toString<br>
+ - any attribute used for equals will be used for toString
