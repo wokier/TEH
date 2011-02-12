@@ -4,10 +4,10 @@ import teh.annotations.TEH;
 
 /**
  * Super class to use in order to use THE If you don't want or cannot inherit
- * this class, just override the 3 methods by using TEHUtils, as in this class.
+ * this class, just override the 3 methods by using TEHUtils, as in this class.<br>
  * 
+ * @TEH is not necessary when you extends TEHObject
  * @author francois wauquier
- * 
  */
 @TEH
 public class TEHObject {

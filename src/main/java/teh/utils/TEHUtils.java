@@ -31,19 +31,23 @@ public class TEHUtils {
 	    return "<null>";
 	}
 	Class<? extends Object> clazz = object.getClass();
-	if (!clazz.isAnnotationPresent(TEH.class)) {
-	    return object.toString();
-	}
-	ToStringBuilder builder = new ToStringBuilder(object);
-	do {
-	    for (Field declaredField : clazz.getDeclaredFields()) {
-		if (declaredField.isAnnotationPresent(ToString.class) || declaredField.isAnnotationPresent(ToStringEquals.class) || declaredField.isAnnotationPresent(ToStringEqualsHashCode.class)) {
-		    builder.append(declaredField.getName(), getToStringValue(object, declaredField));
+	if (isTEHActivated(object, clazz)) {
+	    ToStringBuilder builder = new ToStringBuilder(object);
+	    do {
+		for (Field declaredField : clazz.getDeclaredFields()) {
+		    if (declaredField.isAnnotationPresent(ToString.class) || declaredField.isAnnotationPresent(ToStringEquals.class) || declaredField.isAnnotationPresent(ToStringEqualsHashCode.class)) {
+			builder.append(declaredField.getName(), getToStringValue(object, declaredField));
+		    }
 		}
-	    }
-	    clazz = clazz.getSuperclass();
-	} while (clazz != null);
-	return builder.toString();
+		clazz = clazz.getSuperclass();
+	    } while (clazz != null);
+	    return builder.toString();
+	}
+	return object.toString();
+    }
+
+    private static boolean isTEHActivated(Object object, Class<? extends Object> clazz) {
+	return object instanceof TEHObject || clazz.isAnnotationPresent(TEH.class);
     }
 
     private static Object getToStringValue(Object object, Field declaredField) {
@@ -73,20 +77,20 @@ public class TEHUtils {
 	    return true;
 	}
 	Class<? extends Object> clazz = object.getClass();
-	if (!clazz.isAnnotationPresent(TEH.class)) {
-	    return object.equals(other);
-	}
-	do {
-	    for (Field declaredField : clazz.getDeclaredFields()) {
-		if (declaredField.isAnnotationPresent(ToStringEquals.class) || declaredField.isAnnotationPresent(ToStringEqualsHashCode.class)) {
-		    if (!getEqualsValue(object, other, declaredField)) {
-			return false;
+	if (isTEHActivated(object, clazz)) {
+	    do {
+		for (Field declaredField : clazz.getDeclaredFields()) {
+		    if (declaredField.isAnnotationPresent(ToStringEquals.class) || declaredField.isAnnotationPresent(ToStringEqualsHashCode.class)) {
+			if (!getEqualsValue(object, other, declaredField)) {
+			    return false;
+			}
 		    }
 		}
-	    }
-	    clazz = clazz.getSuperclass();
-	} while (clazz != null);
-	return true;
+		clazz = clazz.getSuperclass();
+	    } while (clazz != null);
+	    return true;
+	}
+	return object.equals(other);
     }
 
     private static boolean getEqualsValue(Object object, Object other, Field declaredField) {
@@ -112,22 +116,23 @@ public class TEHUtils {
 	    return 0;
 	}
 	Class<? extends Object> clazz = object.getClass();
-	if (!clazz.isAnnotationPresent(TEH.class)) {
-	    return object.hashCode();
-	}
-	HashCodeBuilder builder = new HashCodeBuilder();
-	do {
-	    for (Field declaredField : clazz.getDeclaredFields()) {
-		if (declaredField.isAnnotationPresent(ToStringEqualsHashCode.class)) {
-		    builder = addHashCodeValue(object, declaredField, builder);
+	if (isTEHActivated(object, clazz)) {
+
+	    HashCodeBuilder builder = new HashCodeBuilder();
+	    do {
+		for (Field declaredField : clazz.getDeclaredFields()) {
+		    if (declaredField.isAnnotationPresent(ToStringEqualsHashCode.class)) {
+			builder = addHashCodeValue(object, declaredField, builder);
+		    }
 		}
+		clazz = clazz.getSuperclass();
+	    } while (clazz != null);
+	    if (builder.toHashCode() != 17) {// 17 is initial iTotal. means no
+					     // field
+		return builder.toHashCode();
 	    }
-	    clazz = clazz.getSuperclass();
-	} while (clazz != null);
-	if (builder.toHashCode() == 17) {// 17 is initial iTotal. means no field
-	    return object.hashCode();
 	}
-	return builder.toHashCode();
+	return object.hashCode();
     }
 
     private static HashCodeBuilder addHashCodeValue(Object object, Field declaredField, HashCodeBuilder builder) {
