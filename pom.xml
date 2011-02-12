@@ -3,14 +3,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.wokier</groupId>
 	<artifactId>TEH</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
+	<name>TEH</name>
+	<description>ToString Equals HashCode</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<build>
-	<!-- Package with sources -->
+		<!-- Package with sources -->
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
@@ -43,6 +45,11 @@
 				<configuration>
 					<reportOutputDirectory>javadoc/${project.version}</reportOutputDirectory>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0-beta-3</version>
 			</plugin>
 		</plugins>
 	</build>
