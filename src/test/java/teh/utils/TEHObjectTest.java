@@ -1,13 +1,13 @@
 package teh.utils;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.pattern.Patterns.anyCharacter;
 import static org.hamcrest.text.pattern.Patterns.oneOrMore;
 import static org.hamcrest.text.pattern.Patterns.sequence;
 import static org.hamcrest.text.pattern.Patterns.text;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.text.pattern.PatternMatcher;
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ public class TEHObjectTest {
 
 	@Test
 	public void testToString() {
-		MatcherAssert.assertThat(
+		assertThat(
 				new MyTEHObject(1).toString(),
 				new PatternMatcher(sequence(
 						text("teh.utils.TEHObjectTest$MyTEHObject@"),
@@ -35,15 +35,13 @@ public class TEHObjectTest {
 
 	@Test
 	public void testEqualsObject() {
-		assertEquals(new MyTEHObject(1), new MyTEHObject(1));
-		assertFalse(new MyTEHObject(1).equals(new MyTEHObject(2)));
+		assertThat(new MyTEHObject(1), is(new MyTEHObject(1)));
+		assertThat(new MyTEHObject(1), is(not(new MyTEHObject(2))));
 	}
 
 	@Test
 	public void testHashCode() {
-		assertEquals(new MyTEHObject(1).hashCode(),
-				new MyTEHObject(1).hashCode());
-		assertFalse(new MyTEHObject(1).hashCode() == new MyTEHObject(2)
-				.hashCode());
+		assertThat(new MyTEHObject(1).hashCode(), is(new MyTEHObject(1).hashCode()));
+		assertThat(new MyTEHObject(1).hashCode(), is(not(new MyTEHObject(2).hashCode())));
 	}
 }
