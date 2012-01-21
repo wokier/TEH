@@ -19,7 +19,6 @@ public class TEHObjectTest {
 	private class MyTEHObject extends TEHObject {
 
 		public MyTEHObject(int a) {
-			super();
 			this.a = a;
 		}
 

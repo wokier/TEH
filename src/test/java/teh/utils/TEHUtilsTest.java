@@ -33,7 +33,6 @@ public class TEHUtilsTest {
 		}
 
 		public Pojo(int a) {
-			super();
 			this.a = a;
 		}
 
@@ -75,7 +74,6 @@ public class TEHUtilsTest {
 		private String priv;
 
 		public PojoWithPrivateAttribute(String priv) {
-			super();
 			this.priv = priv;
 		}
 
