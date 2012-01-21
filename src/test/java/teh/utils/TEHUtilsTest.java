@@ -70,6 +70,7 @@ public class TEHUtilsTest {
 
 	@TEH
 	class PojoWithPrivateAttribute {
+		@SuppressWarnings("unused")
 		@ToStringEqualsHashCode
 		private String priv;
 

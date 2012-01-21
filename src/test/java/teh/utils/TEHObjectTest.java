@@ -23,6 +23,7 @@ public class TEHObjectTest {
 			this.a = a;
 		}
 
+		@SuppressWarnings("unused")
 		@ToStringEqualsHashCode
 		int a;
 	}
