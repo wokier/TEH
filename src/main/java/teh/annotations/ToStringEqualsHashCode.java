@@ -7,13 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Mark a field as used for toString, equals and hashCode
- * 
- * @see Object#toString()
- * @see Object#equals(Object)
- * @see Object#hashCode()
- * @author francois wauquier
- * 
+ * Marks a field as used for toString, equals and hashCode generation.
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

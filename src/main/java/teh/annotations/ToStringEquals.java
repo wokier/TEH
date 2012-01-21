@@ -7,16 +7,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Mark a field as used for toString and equals
- * 
- * @see Object#toString()
- * @see Object#equals(Object)
- * @author francois wauquier
- * 
+ * Marks a field as used for toString and equals generation.
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface ToStringEquals {
-
 }

@@ -7,18 +7,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicate that this class uses TEH<br>
- * TEH uses annotations to implements ToString, Equals and HashCode, and forces
- * these 2 rules:<br>
- * - any attribute used for hashCode will be used for equals and toString<br>
- * - any attribute used for equals will be used for toString
- * 
- * @author francois wauquier
- * 
+ * Indicates that the class with this annotation uses TEH.
+ * <p>
+ * TEH uses annotations to implements ToString, Equals and HashCode, and
+ * enforces the following rules:
+ * <li>any attribute used for hashCode will be used for equals and toString, and
+ * </li>
+ * <li>any attribute used for equals will be used for toString.</li>
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface TEH {
-
 }
