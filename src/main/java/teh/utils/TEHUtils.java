@@ -13,9 +13,6 @@ import teh.annotations.ToStringEqualsHashCode;
 
 /**
  * TEH Utils
- * 
- * @author francois wauquier
- * 
  */
 public class TEHUtils {
 

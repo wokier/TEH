@@ -10,8 +10,6 @@ import java.lang.annotation.Target;
  * Mark a field as used for toString
  * 
  * @see Object#toString()
- * @author francois wauquier
- * 
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

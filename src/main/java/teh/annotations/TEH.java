@@ -12,9 +12,6 @@ import java.lang.annotation.Target;
  * these 2 rules:<br>
  * - any attribute used for hashCode will be used for equals and toString<br>
  * - any attribute used for equals will be used for toString
- * 
- * @author francois wauquier
- * 
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

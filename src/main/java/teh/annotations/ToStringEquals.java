@@ -11,8 +11,6 @@ import java.lang.annotation.Target;
  * 
  * @see Object#toString()
  * @see Object#equals(Object)
- * @author francois wauquier
- * 
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
