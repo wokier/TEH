@@ -12,31 +12,31 @@ import teh.annotations.TEH;
 @TEH
 public class TEHObject {
 
-    /**
-     * @see java.lang.Object#toString()
-     * @see TEHUtils#toString(Object)
-     */
-    @Override
-    public String toString() {
-	return TEHUtils.toString(this);
-    }
+	/**
+	 * @see java.lang.Object#toString()
+	 * @see TEHUtils#toString(Object)
+	 */
+	@Override
+	public String toString() {
+		return TEHUtils.toString(this);
+	}
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     * @see TEHUtils#equals(Object, Object)
-     */
-    @Override
-    public boolean equals(Object other) {
-	return TEHUtils.equals(this, other);
-    }
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 * @see TEHUtils#equals(Object, Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		return TEHUtils.equals(this, other);
+	}
 
-    /**
-     * @see java.lang.Object#hashCode()
-     * @see TEHUtils#hashCode(Object)
-     */
-    @Override
-    public int hashCode() {
-	return TEHUtils.hashCode(this);
-    }
+	/**
+	 * @see java.lang.Object#hashCode()
+	 * @see TEHUtils#hashCode(Object)
+	 */
+	@Override
+	public int hashCode() {
+		return TEHUtils.hashCode(this);
+	}
 
 }
