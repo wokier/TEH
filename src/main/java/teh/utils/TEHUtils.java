@@ -11,18 +11,9 @@ import teh.annotations.ToString;
 import teh.annotations.ToStringEquals;
 import teh.annotations.ToStringEqualsHashCode;
 
-/**
- * TEH Utils
- */
 public class TEHUtils {
-
 	private static final Logger LOGGER = Logger.getLogger("TEH");
 
-	/**
-	 * @see Object#toString()
-	 * @param object
-	 * @return
-	 */
 	public static String toString(Object object) {
 		if (object == null) {
 			return "<null>";
@@ -70,12 +61,6 @@ public class TEHUtils {
 		}
 	}
 
-	/**
-	 * @see Object#equals(Object)
-	 * @param object
-	 * @param other
-	 * @return
-	 */
 	public static boolean equals(Object object, Object other) {
 		if (object == null) {
 			return other == null;
@@ -119,11 +104,6 @@ public class TEHUtils {
 		}
 	}
 
-	/**
-	 * @see Object#hashCode()
-	 * @param object
-	 * @return
-	 */
 	public static int hashCode(Object object) {
 		if (object == null) {
 			return 0;
@@ -142,8 +122,8 @@ public class TEHUtils {
 				}
 				clazz = clazz.getSuperclass();
 			} while (clazz != null);
-			if (builder.toHashCode() != 17) {// 17 is initial iTotal. means no
-				// field
+			if (builder.toHashCode() != 17) {
+				// 17 is initial iTotal. means no field
 				return builder.toHashCode();
 			}
 		}

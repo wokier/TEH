@@ -14,10 +14,7 @@ import org.junit.Test;
 import teh.annotations.ToStringEqualsHashCode;
 
 public class TEHObjectTest {
-
-	// @TEH is not necessary when you extends TEHObject
 	private class MyTEHObject extends TEHObject {
-
 		public MyTEHObject(int a) {
 			this.a = a;
 		}

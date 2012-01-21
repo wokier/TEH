@@ -18,10 +18,8 @@ import teh.annotations.ToStringEquals;
 import teh.annotations.ToStringEqualsHashCode;
 
 public class TEHUtilsTest {
-
 	@TEH
 	class Pojo {
-
 		public Pojo(int a, String b, Pojo c) {
 			this(a, b);
 			this.c = c;
@@ -44,7 +42,6 @@ public class TEHUtilsTest {
 
 		@ToString
 		Pojo c;
-
 	}
 
 	@TEH
@@ -64,7 +61,6 @@ public class TEHUtilsTest {
 
 	@TEH
 	class PojoWithoutAttribute {
-
 	}
 
 	@TEH
@@ -76,7 +72,6 @@ public class TEHUtilsTest {
 		public PojoWithPrivateAttribute(String priv) {
 			this.priv = priv;
 		}
-
 	}
 
 	@Test
