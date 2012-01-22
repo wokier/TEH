@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module rename-to='alloteouweb'>
-  <source path='annotations'/>
-  <source path='gwt'/>
-<!--  <source path='utils'/>-->
-</module>
