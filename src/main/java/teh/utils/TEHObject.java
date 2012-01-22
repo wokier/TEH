@@ -3,40 +3,28 @@ package teh.utils;
 import teh.annotations.TEH;
 
 /**
- * Super class to use in order to use THE If you don't want or cannot inherit
- * this class, just override the 3 methods by using TEHUtils, as in this class.<br>
+ * Super class that provides default implementations for {@link #equals(Object)}
+ * , {@link #toString()} and {@link #hashCode()}. If you don't want or cannot
+ * inherit this class, just override the 3 methods by using TEHUtils, as in this
+ * class.<br>
  * 
- * @TEH is not necessary when you extends TEHObject
- * @author francois wauquier
+ * Note that the @TEH annotation is not necessary when inheriting from this
+ * class.
  */
 @TEH
 public class TEHObject {
+	@Override
+	public String toString() {
+		return TEHUtils.toString(this);
+	}
 
-    /**
-     * @see java.lang.Object#toString()
-     * @see TEHUtils#toString(Object)
-     */
-    @Override
-    public String toString() {
-	return TEHUtils.toString(this);
-    }
+	@Override
+	public boolean equals(Object other) {
+		return TEHUtils.equals(this, other);
+	}
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     * @see TEHUtils#equals(Object, Object)
-     */
-    @Override
-    public boolean equals(Object other) {
-	return TEHUtils.equals(this, other);
-    }
-
-    /**
-     * @see java.lang.Object#hashCode()
-     * @see TEHUtils#hashCode(Object)
-     */
-    @Override
-    public int hashCode() {
-	return TEHUtils.hashCode(this);
-    }
-
+	@Override
+	public int hashCode() {
+		return TEHUtils.hashCode(this);
+	}
 }
