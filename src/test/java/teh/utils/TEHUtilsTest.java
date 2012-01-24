@@ -120,9 +120,19 @@ public class TEHUtilsTest {
 				is(not(TEHUtils.hashCode(new Pojo(2)))));
 	}
 
-	@Test
-	public void testHashCodeObjectNull() {
-		assertThat(TEHUtils.hashCode(null), is(0));
+	@Test(expected = NullPointerException.class)
+	public void testHashCodeForANullObjectBehavesLikeCallingTheMethodOnNull() {
+		TEHUtils.hashCode(null);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testToStringForANullObjectBehavesLikeCallingTheMethodOnNull() {
+		TEHUtils.toString(null);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testEqualsForANullObjectBehavesLikeCallingTheMethodOnNull() {
+		TEHUtils.equals(null, new Object());
 	}
 
 	@Test
