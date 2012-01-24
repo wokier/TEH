@@ -15,9 +15,6 @@ public class TEHUtils {
 	private static final Logger LOGGER = Logger.getLogger("TEH");
 
 	public static String toString(Object object) {
-		if (object == null) {
-			return "<null>";
-		}
 		Class<? extends Object> clazz = object.getClass();
 		if (isTEHActivated(object, clazz)) {
 			ToStringBuilder builder = new ToStringBuilder(object);
@@ -55,16 +52,14 @@ public class TEHUtils {
 						+ " has @ToStringEqualsHashCode or @ToStringEquals or @ToString annotation, but was not visible for toString.");
 				declaredField.setAccessible(true);
 			}
-			return toString(declaredField.get(object));
+			return declaredField.get(object) == null ? "<null>"
+					: toString(declaredField.get(object));
 		} catch (Exception e) {
 			return e;
 		}
 	}
 
 	public static boolean equals(Object object, Object other) {
-		if (object == null) {
-			return other == null;
-		}
 		if (object == other) {
 			return true;
 		}
@@ -105,9 +100,6 @@ public class TEHUtils {
 	}
 
 	public static int hashCode(Object object) {
-		if (object == null) {
-			return 0;
-		}
 		Class<? extends Object> clazz = object.getClass();
 		if (isTEHActivated(object, clazz)) {
 
