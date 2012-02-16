@@ -61,6 +61,20 @@ public class TEHUtilsTest {
 
 	@TEH
 	class PojoWithoutAttribute {
+		@Override
+		public String toString() {
+			return TEHUtils.toString(this);
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			return TEHUtils.equals(this, other);
+		}
+
+		@Override
+		public int hashCode() {
+			return TEHUtils.hashCode(this, super.hashCode());
+		}
 	}
 
 	@TEH
@@ -74,14 +88,22 @@ public class TEHUtilsTest {
 		}
 	}
 
+	@TEH
+	class PojoNoHashCode {
+		public PojoNoHashCode(int a) {
+			this.a = a;
+		}
+
+		@SuppressWarnings("unused")
+		@ToStringEquals
+		int a;
+
+	}
+
 	@Test
 	public void testToStringObject() {
 		String toString = TEHUtils.toString(new Pojo(1, "2"));
-		assertThat(
-				toString,
-				new PatternMatcher(sequence(
-						text("teh.utils.TEHUtilsTest$Pojo@"),
-						oneOrMore(anyCharacter()), text("[a=1,b=2,c=<null>]"))));
+		assertThat(toString, new PatternMatcher(sequence(text("teh.utils.TEHUtilsTest$Pojo@"), oneOrMore(anyCharacter()), text("[a=1,b=2,c=<null>]"))));
 	}
 
 	@Test
@@ -89,35 +111,26 @@ public class TEHUtilsTest {
 		String toString = TEHUtils.toString(new Pojo(1, "2", new Pojo(3, "4")));
 		assertThat(
 				toString,
-				new PatternMatcher(sequence(
-						text("teh.utils.TEHUtilsTest$Pojo@"),
-						oneOrMore(anyCharacter()),
-						text("[a=1,b=2,c=teh.utils.TEHUtilsTest$Pojo@"),
-						oneOrMore(anyCharacter()), text("[a=3,b=4,c=<null>]]"))));
+				new PatternMatcher(sequence(text("teh.utils.TEHUtilsTest$Pojo@"), oneOrMore(anyCharacter()), text("[a=1,b=2,c=teh.utils.TEHUtilsTest$Pojo@"), oneOrMore(anyCharacter()),
+						text("[a=3,b=4,c=<null>]]"))));
 	}
 
 	@Test
 	public void testEqualsObjectObject() {
-		assertThat(TEHUtils.equals(new Pojo(1, "2"), new Pojo(1, "2")),
-				is(true));
-		assertThat(TEHUtils.equals(new Pojo(1, "2"), new Pojo(1, "3")),
-				is(false));
+		assertThat(TEHUtils.equals(new Pojo(1, "2"), new Pojo(1, "2")), is(true));
+		assertThat(TEHUtils.equals(new Pojo(1, "2"), new Pojo(1, "3")), is(false));
 	}
 
 	@Test
 	public void testEqualsObjectObjectSubClass() {
-		assertThat(TEHUtils.equals(new SubPojo(1, "2"), new SubPojo(1, "2")),
-				is(true));
-		assertThat(TEHUtils.equals(new SubPojo(1, "2"), new SubPojo(1, "3")),
-				is(false));
+		assertThat(TEHUtils.equals(new SubPojo(1, "2"), new SubPojo(1, "2")), is(true));
+		assertThat(TEHUtils.equals(new SubPojo(1, "2"), new SubPojo(1, "3")), is(false));
 	}
 
 	@Test
 	public void testHashCodeObject() {
-		assertThat(TEHUtils.hashCode(new Pojo(1)),
-				is(TEHUtils.hashCode(new Pojo(1))));
-		assertThat(TEHUtils.hashCode(new Pojo(1)),
-				is(not(TEHUtils.hashCode(new Pojo(2)))));
+		assertThat(TEHUtils.hashCode(new Pojo(1)), is(TEHUtils.hashCode(new Pojo(1))));
+		assertThat(TEHUtils.hashCode(new Pojo(1)), is(not(TEHUtils.hashCode(new Pojo(2)))));
 	}
 
 	@Test
@@ -127,31 +140,37 @@ public class TEHUtilsTest {
 
 	@Test
 	public void testHashCodePonderateFields() {
-		assertThat(TEHUtils.hashCode(new SubPojo(1, 2)),
-				is(not(TEHUtils.hashCode(new SubPojo(2, 1)))));
+		assertThat(TEHUtils.hashCode(new SubPojo(1, 2)), is(not(TEHUtils.hashCode(new SubPojo(2, 1)))));
+	}
+
+	@Test
+	public void testToStringWithoutAttributeFallBackToDefaultImpl() {
+		TEHUtils.toString(new PojoWithoutAttribute());
+	}
+
+	@Test
+	public void testEqualsWithoutAttributeFallBackToDefaultImpl() {
+		assertThat(TEHUtils.equals(new PojoWithoutAttribute(), new PojoWithoutAttribute()), is(false));
 	}
 
 	@Test
 	public void testHashCodeWithoutAttributeFallBackToDefaultImpl() {
-		assertThat(TEHUtils.hashCode(new PojoWithoutAttribute()),
-				is(not(TEHUtils.hashCode(new PojoWithoutAttribute()))));
+		assertThat(new PojoWithoutAttribute().hashCode(), is(not(new PojoWithoutAttribute().hashCode())));
 	}
 
 	@Test
 	public void testPrivateAttributeToStringWarn() {
-		assertThat(TEHUtils.toString(new PojoWithPrivateAttribute("priv")),
-				not(containsString("IllegalAccessException")));
+		assertThat(TEHUtils.toString(new PojoWithPrivateAttribute("priv")), not(containsString("IllegalAccessException")));
 	}
 
 	@Test
 	public void testPrivateAttributeEqualsWarn() {
-		assertThat(TEHUtils.equals(new PojoWithPrivateAttribute("priv"),
-				new PojoWithPrivateAttribute("priv")), is(true));
+		assertThat(TEHUtils.equals(new PojoWithPrivateAttribute("priv"), new PojoWithPrivateAttribute("priv")), is(true));
 	}
 
 	@Test
 	public void testPrivateAttributeHashCodeWarn() {
-		assertThat(TEHUtils.hashCode(new PojoWithPrivateAttribute("priv")),
-				is(TEHUtils.hashCode(new PojoWithPrivateAttribute("priv"))));
+		assertThat(TEHUtils.hashCode(new PojoWithPrivateAttribute("priv")), is(TEHUtils.hashCode(new PojoWithPrivateAttribute("priv"))));
 	}
+
 }

@@ -25,6 +25,7 @@ public class TEHObject {
 
 	@Override
 	public int hashCode() {
-		return TEHUtils.hashCode(this);
+		return TEHUtils.hashCode(this, super.hashCode());
 	}
+
 }
