@@ -17,7 +17,7 @@ public class TEHUtils {
 
     public static String toString(Object object) {
 	if (object == null) {
-	    return "<null>";
+	    return String.valueOf(object);// "null"
 	}
 	Class<? extends Object> clazz = object.getClass();
 	if (isTEHActivated(object, clazz)) {
