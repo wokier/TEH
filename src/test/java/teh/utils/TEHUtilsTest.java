@@ -42,6 +42,22 @@ public class TEHUtilsTest {
 
 	@ToString
 	Pojo c;
+
+	@Override
+	public String toString() {
+	    return TEHUtils.toString(this);
+	}
+
+	@Override
+	public boolean equals(Object other) {
+	    return TEHUtils.equals(this, other);
+	}
+
+	@Override
+	public int hashCode() {
+	    return TEHUtils.hashCode(this, super.hashCode());
+	}
+
     }
 
     @TEH
@@ -103,7 +119,7 @@ public class TEHUtilsTest {
     @Test
     public void testToStringObject() {
 	String toString = TEHUtils.toString(new Pojo(1, "2"));
-	assertThat(toString, new PatternMatcher(sequence(text("teh.utils.TEHUtilsTest$Pojo@"), oneOrMore(anyCharacter()), text("[a=1,b=2,c=null]"))));
+	assertThat(toString, new PatternMatcher(sequence(text("teh.utils.TEHUtilsTest$Pojo@"), oneOrMore(anyCharacter()), text("{a=1, b=2, c=null}"))));
     }
 
     @Test
@@ -111,8 +127,8 @@ public class TEHUtilsTest {
 	String toString = TEHUtils.toString(new Pojo(1, "2", new Pojo(3, "4")));
 	assertThat(
 		toString,
-		new PatternMatcher(sequence(text("teh.utils.TEHUtilsTest$Pojo@"), oneOrMore(anyCharacter()), text("[a=1,b=2,c=teh.utils.TEHUtilsTest$Pojo@"), oneOrMore(anyCharacter()),
-			text("[a=3,b=4,c=null]]"))));
+		new PatternMatcher(sequence(text("teh.utils.TEHUtilsTest$Pojo@"), oneOrMore(anyCharacter()), text("{a=1, b=2, c=teh.utils.TEHUtilsTest$Pojo@"), oneOrMore(anyCharacter()),
+			text("{a=3, b=4, c=null}}"))));
     }
 
     @Test
