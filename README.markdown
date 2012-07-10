@@ -76,4 +76,5 @@ You can activate TEH on a given class by 2 ways
 > When a junit assertion like assertEquals is failing, it is preferable that the generated message gives the difference between objects.
 - - -
 ## Release Notes
+0.6 2012-07-10 Performance Optimizations
 0.5 2012-06-16 gwt-teh
