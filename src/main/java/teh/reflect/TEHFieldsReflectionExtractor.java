@@ -24,11 +24,11 @@ public class TEHFieldsReflectionExtractor implements TEHFields {
 
     private static TEHFieldsReflectionExtractor instance;
 
-    private Map<Class<? extends Object>, List<Class<? extends Object>>> classesMap = new ConcurrentHashMap<Class<? extends Object>, List<Class<? extends Object>>>();
+    private Map<String, List<Class<? extends Object>>> classesHierarchyMap = new ConcurrentHashMap<String, List<Class<? extends Object>>>();
 
-    private Map<Class<? extends Object>, List<Field>> toStringFieldsMap = new ConcurrentHashMap<Class<? extends Object>, List<Field>>();
-    private Map<Class<? extends Object>, List<Field>> equalsFieldsMap = new ConcurrentHashMap<Class<? extends Object>, List<Field>>();
-    private Map<Class<? extends Object>, List<Field>> hahsCodeFieldsMap = new ConcurrentHashMap<Class<? extends Object>, List<Field>>();
+    private Map<String, List<Field>> toStringFieldsMap = new ConcurrentHashMap<String, List<Field>>();
+    private Map<String, List<Field>> equalsFieldsMap = new ConcurrentHashMap<String, List<Field>>();
+    private Map<String, List<Field>> hashCodeFieldsMap = new ConcurrentHashMap<String, List<Field>>();
 
     private TEHFieldsReflectionExtractor() {
 	super();
@@ -68,8 +68,8 @@ public class TEHFieldsReflectionExtractor implements TEHFields {
     }
 
     private List<Field> extractToStringFields(Class<? extends Object> objectClazz) {
-	if (toStringFieldsMap.containsKey(objectClazz)) {
-	    return toStringFieldsMap.get(objectClazz);
+	if (toStringFieldsMap.containsKey(objectClazz.getName())) {
+	    return toStringFieldsMap.get(objectClazz.getName());
 	}
 	List<Field> toStringFields = new ArrayList<Field>();
 	for (Field declaredField : objectClazz.getDeclaredFields()) {
@@ -77,7 +77,7 @@ public class TEHFieldsReflectionExtractor implements TEHFields {
 		toStringFields.add(declaredField);
 	    }
 	}
-	toStringFieldsMap.put(objectClazz, toStringFields);
+	toStringFieldsMap.put(objectClazz.getName(), toStringFields);
 	return toStringFields;
     }
 
@@ -101,8 +101,8 @@ public class TEHFieldsReflectionExtractor implements TEHFields {
     }
 
     private List<Field> extractEqualsFields(Class<? extends Object> objectClazz) {
-	if (equalsFieldsMap.containsKey(objectClazz)) {
-	    return equalsFieldsMap.get(objectClazz);
+	if (equalsFieldsMap.containsKey(objectClazz.getName())) {
+	    return equalsFieldsMap.get(objectClazz.getName());
 	}
 	List<Field> equalsFields = new ArrayList<Field>();
 	for (Field declaredField : objectClazz.getDeclaredFields()) {
@@ -110,7 +110,7 @@ public class TEHFieldsReflectionExtractor implements TEHFields {
 		equalsFields.add(declaredField);
 	    }
 	}
-	equalsFieldsMap.put(objectClazz, equalsFields);
+	equalsFieldsMap.put(objectClazz.getName(), equalsFields);
 	return equalsFields;
     }
 
@@ -134,8 +134,8 @@ public class TEHFieldsReflectionExtractor implements TEHFields {
     }
 
     private List<Field> extractHashCodeFields(Class<? extends Object> objectClazz) {
-	if (hahsCodeFieldsMap.containsKey(objectClazz)) {
-	    return hahsCodeFieldsMap.get(objectClazz);
+	if (hashCodeFieldsMap.containsKey(objectClazz.getName())) {
+	    return hashCodeFieldsMap.get(objectClazz.getName());
 	}
 	List<Field> hashCodeFields = new ArrayList<Field>();
 	for (Field declaredField : objectClazz.getDeclaredFields()) {
@@ -143,7 +143,7 @@ public class TEHFieldsReflectionExtractor implements TEHFields {
 		hashCodeFields.add(declaredField);
 	    }
 	}
-	hahsCodeFieldsMap.put(objectClazz, hashCodeFields);
+	hashCodeFieldsMap.put(objectClazz.getName(), hashCodeFields);
 	return hashCodeFields;
     }
 
@@ -155,8 +155,8 @@ public class TEHFieldsReflectionExtractor implements TEHFields {
     }
 
     private List<Class<? extends Object>> getClassHierarchy(Class<? extends Object> objectClazz) {
-	if (classesMap.containsKey(objectClazz)) {
-	    return classesMap.get(objectClazz);
+	if (classesHierarchyMap.containsKey(objectClazz.getName())) {
+	    return classesHierarchyMap.get(objectClazz.getName());
 	}
 	List<Class<? extends Object>> classHierarchy = new ArrayList<Class<? extends Object>>();
 	Class<? extends Object> clazz = objectClazz;
@@ -164,7 +164,8 @@ public class TEHFieldsReflectionExtractor implements TEHFields {
 	    classHierarchy.add(clazz);
 	    clazz = clazz.getSuperclass();
 	} while (clazz != null);
-	classesMap.put(objectClazz, classHierarchy);
+	classesHierarchyMap.put(objectClazz.getName(), classHierarchy);
 	return classHierarchy;
     }
+
 }
