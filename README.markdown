@@ -74,6 +74,11 @@ You can activate TEH on a given class by 2 ways
  *	any attribute used for equals will be used for toString
 
 > When a junit assertion like assertEquals is failing, it is preferable that the generated message gives the difference between objects.
+
+- - -
+## Using GWT ?
+Checkout [https://github.com/wokier/GWT-TEH]
+
 - - -
 ## Release Notes
 0.7 2013-04-24 Avoid Class reference. Maven Central Release
