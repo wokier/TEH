@@ -16,15 +16,6 @@ The annotations are
 
 - - -
 You can activate TEH on a given class by 2 ways
-## inheritance
-	class MyTEHObject extends TEHObject{
-		
-		@ToStringEqualsHashCode
-		long id;
-
-		@ToString
-		String description;	
-	...
 
 ## annotation
 	@TEH
@@ -48,6 +39,17 @@ You can activate TEH on a given class by 2 ways
 			return TEHUtils.hashCode(this,super.hashCode());
 		}
 	...
+
+## inheritance
+	class MyTEHObject extends TEHObject{
+		
+		@ToStringEqualsHashCode
+		long id;
+
+		@ToString
+		String description;	
+	...
+
 
 - - -
 ## 2 unbreakable rules explanations
@@ -82,5 +84,7 @@ Checkout [https://github.com/wokier/GWT-TEH]
 - - -
 ## Release Notes
 0.7 2013-04-24 Avoid Class reference. Maven Central Release
+
 0.6 2012-07-10 Performance Optimizations
+
 0.5 2012-06-16 gwt-teh
